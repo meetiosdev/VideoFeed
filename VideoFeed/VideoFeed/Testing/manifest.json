@@ -1,6 +1,7 @@
 {
   "videos": [
     "https://cdn.dev.airxp.app/AgentVideos-HLS-Progressive/000298e8-08bc-4d79-adfc-459d7b18edad/master.m3u8",
+    "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
     "https://cdn.dev.airxp.app/AgentVideos-HLS-Progressive/0042b074-1533-47f8-b370-5713d536f09b/master.m3u8",
     "https://cdn.dev.airxp.app/AgentVideos-HLS-Progressive/005b2f1c-ea39-44f7-80dc-6f50334dcb3d/master.m3u8",
     "https://cdn.dev.airxp.app/AgentVideos-HLS-Progressive/0069a200-1282-4c49-9073-95ad168a5537/master.m3u8",

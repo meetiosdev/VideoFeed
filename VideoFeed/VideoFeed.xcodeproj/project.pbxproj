@@ -21,6 +21,7 @@
 		0FEC5CBB2E8EA9A400C29E3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FEC5CAC2E8EA9A400C29E3D /* Assets.xcassets */; };
 		0FEC5CBE2E8EA9A600C29E3D /* VideoFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEC5CBC2E8EA9A600C29E3D /* VideoFeedTests.swift */; };
 		0FEC5CC12E8EA9A900C29E3D /* VideoFeedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEC5CBF2E8EA9A900C29E3D /* VideoFeedUITests.swift */; };
+		0FEC5CC82E8EB2BA00C29E3D /* VideoProgressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEC5CC62E8EB2BA00C29E3D /* VideoProgressService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		0FEC5CAE2E8EA9A400C29E3D /* VideoFeedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedApp.swift; sourceTree = "<group>"; };
 		0FEC5CBC2E8EA9A600C29E3D /* VideoFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedTests.swift; sourceTree = "<group>"; };
 		0FEC5CBF2E8EA9A900C29E3D /* VideoFeedUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedUITests.swift; sourceTree = "<group>"; };
+		0FEC5CC62E8EB2BA00C29E3D /* VideoProgressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoProgressService.swift; sourceTree = "<group>"; };
 		DE6C23AF2E708EDC00A3F75A /* VideoFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE6C23BF2E708EDD00A3F75A /* VideoFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE6C23C92E708EDD00A3F75A /* VideoFeedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoFeedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +106,7 @@
 		0FEC5C9D2E8EA9A400C29E3D /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				0FEC5CC72E8EB2BA00C29E3D /* Services */,
 				0FEC5C9A2E8EA9A400C29E3D /* Models */,
 				0FEC5C9C2E8EA9A400C29E3D /* Repositories */,
 			);
@@ -198,6 +201,14 @@
 				0FEC5CBF2E8EA9A900C29E3D /* VideoFeedUITests.swift */,
 			);
 			path = VideoFeedUITests;
+			sourceTree = "<group>";
+		};
+		0FEC5CC72E8EB2BA00C29E3D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0FEC5CC62E8EB2BA00C29E3D /* VideoProgressService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		DE6C23A62E708EDC00A3F75A = {
@@ -359,6 +370,7 @@
 			files = (
 				0FEC5CB02E8EA9A400C29E3D /* Manifest.swift in Sources */,
 				0FEC5CB12E8EA9A400C29E3D /* RemoteVideoRepository.swift in Sources */,
+				0FEC5CC82E8EB2BA00C29E3D /* VideoProgressService.swift in Sources */,
 				0FEC5CB22E8EA9A400C29E3D /* VideoItem.swift in Sources */,
 				0FEC5CB32E8EA9A400C29E3D /* VideoRepository.swift in Sources */,
 				0FEC5CB42E8EA9A400C29E3D /* VideoFeedViewModel.swift in Sources */,
