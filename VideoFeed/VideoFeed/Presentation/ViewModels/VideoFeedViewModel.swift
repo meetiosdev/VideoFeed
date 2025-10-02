@@ -47,6 +47,7 @@ class VideoFeedViewModel: ObservableObject {
             if players[i] == nil {
                 let player = AVPlayer(url: videos[i].url)
                 players[i] = player
+                player.isMuted = false
                 player.currentItem?.preferredForwardBufferDuration = 5
                 player.currentItem?.canUseNetworkResourcesForLiveStreamingWhilePaused = true
                 if let item = player.currentItem {
