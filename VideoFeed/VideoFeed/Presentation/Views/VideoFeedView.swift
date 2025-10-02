@@ -14,7 +14,8 @@ struct VideoFeedView: View {
                     VideoPlayerView(
                         player: viewModel.player(for: index),
                         isActive: .constant(viewModel.currentIndex == index),
-                        accessibilityId: index
+                        accessibilityId: index,
+                        videoId: video.progressId
                     )
                     .tag(index)
                 }

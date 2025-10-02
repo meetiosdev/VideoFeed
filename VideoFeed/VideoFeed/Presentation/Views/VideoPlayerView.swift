@@ -6,6 +6,7 @@ struct VideoPlayerView: View {
     var player: AVPlayer?
     @Binding var isActive: Bool
     var accessibilityId: Int
+    var videoId: String
 
     var body: some View {
         ZStack {
@@ -26,13 +27,17 @@ struct VideoPlayerView: View {
                         }
                         
                         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { _ in
+                            // Clear progress when video finishes
+                            VideoProgressService.shared.clearProgress(for: videoId)
                             player.seek(to: .zero)
                             player.play()
                         }
                     }
                     .onDisappear {
+                        // Save progress before pausing
+                        let currentTime = player.currentTime()
+                        VideoProgressService.shared.saveProgress(for: videoId, time: currentTime)
                         player.pause()
-                        player.seek(to: .zero)
                     }
                     .accessibilityLabel("Video Player \(accessibilityId)")
             } else {
@@ -53,8 +58,18 @@ struct VideoPlayerView: View {
                     player.play()
                     player.isMuted = false
                 } else {
+                    // Save progress when video becomes inactive
+                    let currentTime = player.currentTime()
+                    VideoProgressService.shared.saveProgress(for: videoId, time: currentTime)
                     player.pause()
                 }
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            // Save progress when app goes to background
+            if let player = player {
+                let currentTime = player.currentTime()
+                VideoProgressService.shared.saveProgress(for: videoId, time: currentTime)
             }
         }
     }

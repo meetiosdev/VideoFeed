@@ -12,7 +12,9 @@ class VideoFeedViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     private var statusObservers: [Int: NSKeyValueObservation] = [:]
+    private var timeObservers: [Int: Any] = [:]
     private let fetchManifestUseCase: FetchManifestUseCase
+    private let progressService = VideoProgressService.shared
     
     init(fetchManifestUseCase: FetchManifestUseCase) {
         self.fetchManifestUseCase = fetchManifestUseCase
@@ -50,6 +52,12 @@ class VideoFeedViewModel: ObservableObject {
                 player.isMuted = false
                 player.currentItem?.preferredForwardBufferDuration = 5
                 player.currentItem?.canUseNetworkResourcesForLiveStreamingWhilePaused = true
+                
+                // Restore progress if available
+                if let savedProgress = progressService.getProgress(for: videos[i].progressId) {
+                    player.seek(to: savedProgress)
+                }
+                
                 if let item = player.currentItem {
                     statusObservers[i] = item.observe(\.status, options: [.new]) { [weak self] item, _ in
                         if item.status == .readyToPlay {
@@ -58,15 +66,34 @@ class VideoFeedViewModel: ObservableObject {
                             }
                         }
                     }
+                    
+                    // Add time observer for progress tracking
+                    let timeObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC)), queue: .main) { [weak self] time in
+                        self?.progressService.saveProgress(for: self?.videos[i].progressId ?? "", time: time)
+                    }
+                    timeObservers[i] = timeObserver
                 }
             }
         }
         let keep = Set(indices)
         for key in players.keys where !keep.contains(key) {
+            // Save final progress before cleanup
+            if let player = players[key] {
+                let currentTime = player.currentTime()
+                progressService.saveProgress(for: videos[key].progressId, time: currentTime)
+            }
+            
             players[key]?.pause()
             players[key]?.replaceCurrentItem(with: nil)
             players.removeValue(forKey: key)
             statusObservers[key] = nil
+            
+            // Remove time observer
+            if let timeObserver = timeObservers[key] {
+                players[key]?.removeTimeObserver(timeObserver)
+                timeObservers.removeValue(forKey: key)
+            }
+            
             if videoReadyStates.indices.contains(key) {
                 videoReadyStates[key] = false
             }
@@ -79,5 +106,16 @@ class VideoFeedViewModel: ObservableObject {
     
     func player(for index: Int) -> AVPlayer? {
         players[index]
+    }
+    
+    // Clear progress for a specific video
+    func clearProgress(for index: Int) {
+        guard videos.indices.contains(index) else { return }
+        progressService.clearProgress(for: videos[index].progressId)
+    }
+    
+    // Clear all progress
+    func clearAllProgress() {
+        progressService.clearAllProgress()
     }
 }
