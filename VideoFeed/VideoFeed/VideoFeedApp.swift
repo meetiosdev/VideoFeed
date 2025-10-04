@@ -20,6 +20,7 @@ struct VideoFeedApp: App {
             let useCase = FetchManifestUseCase(repository: repository)
             let viewModel = VideoFeedViewModel(fetchManifestUseCase: useCase)
             VideoFeedView(viewModel: viewModel)
+           // TabVideosView()
         }
     }
 }

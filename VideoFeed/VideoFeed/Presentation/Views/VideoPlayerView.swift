@@ -80,6 +80,7 @@ struct VideoPlayerView: View {
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             // Audio session configuration failed
+            print(error.localizedDescription)
         }
     }
     

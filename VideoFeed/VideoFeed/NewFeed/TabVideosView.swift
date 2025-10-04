@@ -21,13 +21,10 @@ struct TabVideosView: View {
     var body: some View {
         Group {
             if viewModel.isLoading {
-                Text("Loading")
-            } else if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
+                ProgressView("Loading videos...")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .ignoresSafeArea()
-            } else if !viewModel.videos.isEmpty {
+            } else {
                 TabView(selection: $viewModel.currentIndex) {
                     ForEach(Array(viewModel.videos.enumerated()), id: \.element.id) { index, video in
                         TabVideoPlayerView(video: video)
@@ -35,13 +32,9 @@ struct TabVideosView: View {
                     }
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                .ignoresSafeArea()
-            } else {
-                Text("No videos available")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .ignoresSafeArea()
             }
         }
+        .ignoresSafeArea()
         .onAppear {
             viewModel.loadVideos()
         }

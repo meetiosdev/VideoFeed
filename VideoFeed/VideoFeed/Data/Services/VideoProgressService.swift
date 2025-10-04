@@ -1,7 +1,7 @@
 import Foundation
 import AVKit
 
-class VideoProgressService: ObservableObject {
+class VideoProgressService {
     static let shared = VideoProgressService()
     
     private let userDefaults = UserDefaults.standard
