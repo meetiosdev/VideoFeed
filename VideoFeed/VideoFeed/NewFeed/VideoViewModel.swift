@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import AVFoundation
 
 struct Video: Codable, Identifiable, Hashable {
     let id: UUID
@@ -16,11 +17,16 @@ struct Video: Codable, Identifiable, Hashable {
 
 @Observable
 class VideoViewModel {
+    
     var videos: [Video] = []
     var currentIndex: Int = 0
     var selectedVideo: Video?
     var isLoading: Bool = false
     var errorMessage: String?
+    
+    // Remove @Published since we're using @Observable
+    var players: [Int: AVPlayer] = [:]
+    private var timeObservers: [Int: Any] = [:]
 
     init() {
         loadVideos()
